@@ -272,8 +272,11 @@ body {
   border-radius: 5px;
   overflow: hidden;
   background: var(--bg3);
-  aspect-ratio: 2/3;
-  transition: transform 0.25s, box-shadow 0.25s, z-index 0s;
+  /* Use padding-top trick so aspect-ratio works reliably across all browsers */
+  width: 100%;
+  padding-top: 150%; /* 2:3 ratio */
+  height: 0;
+  transition: transform 0.25s, box-shadow 0.25s;
 }
 .movie-card:hover {
   transform: scale(1.07) translateY(-5px);
@@ -284,13 +287,18 @@ body {
 
 /* Poster image — named poster_1.png … poster_8.png */
 .poster-img {
+  position: absolute;
+  top: 0; left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
   display: block;
 }
 /* Shown if image fails to load */
 .poster-fallback {
+  position: absolute;
+  top: 0; left: 0;
   width: 100%;
   height: 100%;
   display: flex;
@@ -307,7 +315,8 @@ body {
 /* Hover overlay */
 .card-hover {
   position: absolute;
-  inset: 0;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
   opacity: 0;
   transition: opacity 0.2s;
@@ -379,9 +388,11 @@ body {
 }
 .modal-poster {
   width: 100%;
-  max-height: 480px;
-  object-fit: cover;
+  max-height: 520px;
+  object-fit: contain;
+  object-position: center center;
   display: block;
+  background: #000;
 }
 .modal-poster-fallback {
   width: 100%;
@@ -397,8 +408,11 @@ body {
 .modal-video {
   display: none;
   width: 100%;
-  max-height: 540px;
+  /* 16:9 box, video fits inside without cropping */
+  aspect-ratio: 16/9;
+  max-height: 70vh;
   background: #000;
+  object-fit: contain;
   outline: none;
 }
 /* Gradient over poster bottom */
@@ -823,20 +837,27 @@ function goBack() {
 function openModal(idx) {
   const m = movies[idx];
 
-  /* poster */
+  /* poster — reset onerror each time so it fires correctly on every open */
   const posterEl = document.getElementById('modal-poster');
   const posterFb = document.getElementById('modal-poster-fb');
+  posterEl.onerror = null;
   posterEl.style.display = 'block';
   posterFb.style.display = 'none';
+  posterEl.src = '';
+  posterEl.onerror = function() {
+    this.style.display = 'none';
+    posterFb.style.display = 'flex';
+  };
   posterEl.src = m.poster;
   posterEl.alt = m.title;
 
-  /* reset video */
+  /* reset video — don't load until Play is hit */
   const vid = document.getElementById('modal-video');
   vid.pause();
-  vid.src = m.video;
+  vid.removeAttribute('src');
+  vid.load();
   vid.style.display = 'none';
-  vid.currentTime = 0;
+  vid._pendingSrc = m.video;
 
   /* show poster controls */
   document.getElementById('modal-top-fade').style.display = 'block';
@@ -873,6 +894,12 @@ function playVideo() {
   const posterEl = document.getElementById('modal-poster');
   const posterFb = document.getElementById('modal-poster-fb');
 
+  /* set src now (lazy load) */
+  if (vid._pendingSrc) {
+    vid.src = vid._pendingSrc;
+    vid._pendingSrc = null;
+  }
+
   /* hide poster, show video */
   posterEl.style.display = 'none';
   posterFb.style.display = 'none';
@@ -880,23 +907,27 @@ function playVideo() {
   document.getElementById('modal-play-btn').style.display = 'none';
   vid.style.display = 'block';
   vid.play().catch(() => {
-    /* if mp4 not found, show friendly message */
     vid.style.display = 'none';
     const fb = document.createElement('div');
-    fb.style.cssText = 'padding:40px;text-align:center;color:#999;font-size:0.85rem;';
-    fb.textContent = '⚠️ Video file not found. Make sure ' + vid.src.split('/').pop() + ' is in the same folder as this HTML file.';
-    document.getElementById('modal-top').insertBefore(fb, document.getElementById('modal-top').firstChild);
+    fb.style.cssText = 'padding:36px;text-align:center;color:#888;font-size:0.85rem;line-height:1.6;';
+    fb.textContent = '⚠️ Video not found. Make sure the .mp4 file is in the same folder as the HTML.';
+    document.getElementById('modal-top').prepend(fb);
   });
 }
 
 function closeModal() {
   const vid = document.getElementById('modal-video');
   vid.pause();
-  vid.src = '';
+  vid.removeAttribute('src');
+  vid.load();
   vid.style.display = 'none';
-  document.getElementById('modal-poster').style.display = 'block';
+  const posterEl = document.getElementById('modal-poster');
+  posterEl.style.display = 'block';
+  document.getElementById('modal-poster-fb').style.display = 'none';
   document.getElementById('modal-play-btn').style.display = 'inline-flex';
   document.getElementById('modal-top-fade').style.display = 'block';
+  /* remove any error message divs */
+  document.querySelectorAll('#modal-top > div:not(.modal-top-fade):not(.modal-poster-fallback)').forEach(el => el.remove());
   document.getElementById('modal').classList.remove('open');
   document.body.style.overflow = '';
 }
