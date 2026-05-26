@@ -3,882 +3,467 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NidhiFlix 💕</title>
+<title>NidhiFlix</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#E50914;
+  --bg:#141414;
+  --bg2:#1c1c1c;
+  --bg3:#2a2a2a;
+  --text:#fff;
+  --muted:#999;
+}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
 
-:root {
-  --red: #E50914;
-  --bg: #141414;
-  --bg2: #1c1c1c;
-  --bg3: #2a2a2a;
-  --text: #ffffff;
-  --muted: #999999;
-}
+/* ── LOGO ── */
+.logo-bar{position:fixed;top:0;left:0;right:0;z-index:50;padding:18px 52px;background:linear-gradient(to bottom,rgba(0,0,0,.92) 0%,transparent 100%);pointer-events:none}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--red);letter-spacing:3px;line-height:1;text-shadow:0 0 40px rgba(229,9,20,.5)}
+.logo-sub{font-size:.6rem;letter-spacing:5px;color:rgba(255,255,255,.45);text-transform:uppercase;margin-top:3px}
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+/* ── BACK BTN ── */
+#back-btn{display:none;position:fixed;top:26px;right:52px;z-index:200;background:rgba(40,40,40,.85);color:#fff;border:1px solid rgba(255,255,255,.15);padding:8px 20px;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:.85rem;cursor:pointer;backdrop-filter:blur(8px);transition:background .18s}
+#back-btn:hover{background:rgba(70,70,70,.95)}
 
-/* ─── LOGO BAR ─── */
-.logo-bar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 50;
-  padding: 18px 52px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.92) 0%, transparent 100%);
-  pointer-events: none;
-}
-.logo {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 2.5rem;
-  color: var(--red);
-  letter-spacing: 3px;
-  line-height: 1;
-  text-shadow: 0 0 40px rgba(229,9,20,0.5);
-}
-.logo-sub {
-  font-size: 0.6rem;
-  letter-spacing: 5px;
-  color: rgba(255,255,255,0.45);
-  text-transform: uppercase;
-  margin-top: 3px;
-}
+/* ── PROFILE SCREEN ── */
+#profile-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;position:relative;overflow:hidden}
+#profile-screen::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 50% 45%,rgba(229,9,20,.09) 0%,transparent 65%);pointer-events:none}
+.profile-who{font-size:clamp(1.3rem,2.5vw,2rem);font-weight:300;margin-bottom:48px;letter-spacing:.5px}
+.profile-wrap{display:flex;flex-direction:column;align-items:center;gap:18px;cursor:pointer}
+.profile-wrap:hover .p-avatar{border-color:#fff;transform:scale(1.06)}
+.profile-wrap:hover .p-name{color:#fff}
+.p-avatar{width:150px;height:150px;border-radius:8px;border:3px solid transparent;overflow:hidden;background:var(--bg3);transition:border-color .22s,transform .22s;display:flex;align-items:center;justify-content:center}
+.p-avatar-emoji{font-size:4.5rem}
+.p-name{font-size:1.1rem;font-weight:400;color:var(--muted);letter-spacing:.5px;transition:color .2s}
 
-/* ─── PROFILE SCREEN ─── */
-#profile-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 20px;
-  position: relative;
-  overflow: hidden;
-}
-#profile-screen::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(229,9,20,0.09) 0%, transparent 65%);
-  pointer-events: none;
-}
-.profile-who {
-  font-size: clamp(1.3rem, 2.5vw, 2rem);
-  font-weight: 300;
-  margin-bottom: 48px;
-  letter-spacing: 0.5px;
-}
-.profile-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
-  cursor: pointer;
-}
-.profile-wrap:hover .p-avatar { border-color: #fff; transform: scale(1.06); }
-.profile-wrap:hover .p-name { color: #fff; }
-.p-avatar {
-  width: 150px;
-  height: 150px;
-  border-radius: 8px;
-  border: 3px solid transparent;
-  overflow: hidden;
-  background: var(--bg3);
-  transition: border-color 0.22s, transform 0.22s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-/* 🔁 FILE: Replace emoji with → <img src="profile.png" alt="Nidhi" style="width:100%;height:100%;object-fit:cover;"> */
-.p-avatar-emoji { font-size: 4.5rem; }
-.p-name {
-  font-size: 1.1rem;
-  font-weight: 400;
-  color: var(--muted);
-  letter-spacing: 0.5px;
-  transition: color 0.2s;
-}
+/* ── BROWSE SCREEN ── */
+#browse-screen{display:none;min-height:100vh;padding-bottom:90px}
 
-/* ─── BACK BTN ─── */
-#back-btn {
-  display: none;
-  position: fixed;
-  top: 26px; right: 52px;
-  z-index: 200;
-  background: rgba(40,40,40,0.85);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.15);
-  padding: 8px 20px;
-  border-radius: 4px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.85rem;
-  cursor: pointer;
-  backdrop-filter: blur(8px);
-  transition: background 0.18s;
-}
-#back-btn:hover { background: rgba(70,70,70,0.95); }
+/* ── HERO CAROUSEL ── */
+.hero{position:relative;height:78vh;min-height:520px;background:#0d0d0d;overflow:hidden}
 
-/* ─── BROWSE SCREEN ─── */
-#browse-screen {
-  display: none;
-  min-height: 100vh;
-  padding-bottom: 90px;
-}
+/* individual slide */
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.4s ease;pointer-events:none}
+.hero-slide.active{opacity:1;pointer-events:auto}
+.hero-slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block;animation:kenburns 9s ease-in-out infinite alternate}
+@keyframes kenburns{from{transform:scale(1)} to{transform:scale(1.07)}}
+.slide-fallback{position:absolute;inset:0;background:linear-gradient(135deg,#0d0d0d 0%,#2a0808 50%,#0d0d0d 100%);display:flex;align-items:center;justify-content:center;font-size:6rem;opacity:.18}
 
-/* ─── HERO ─── */
-.hero {
-  position: relative;
-  height: 75vh;
-  min-height: 500px;
-  background: #0d0d0d;
-  overflow: hidden;
-}
-.hero-img {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  display: block;
-}
-/* shown when poster_1.png isn't found yet */
-.hero-fallback {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, #0d0d0d 0%, #2a0808 50%, #0d0d0d 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 7rem;
-  opacity: 0.2;
-}
-.hero-fade {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to right, rgba(20,20,20,0.95) 0%, rgba(20,20,20,0.55) 50%, rgba(20,20,20,0.1) 100%),
-    linear-gradient(to top, rgba(20,20,20,1) 0%, transparent 50%);
-}
-.hero-body {
-  position: absolute;
-  bottom: 80px;
-  left: 52px;
-  max-width: 540px;
-}
-.hero-tagline {
-  font-size: 0.82rem;
-  font-weight: 300;
-  font-style: italic;
-  color: rgba(255,255,255,0.55);
-  margin-bottom: 10px;
-  letter-spacing: 0.5px;
-}
-.hero-tag {
-  display: inline-block;
-  background: var(--red);
-  color: #fff;
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  padding: 5px 14px;
-  border-radius: 2px;
-  margin-bottom: 14px;
-}
-.hero-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(3rem, 6vw, 5.5rem);
-  line-height: 0.95;
-  margin-bottom: 16px;
-  text-shadow: 0 2px 30px rgba(0,0,0,0.9);
-  letter-spacing: 1px;
-}
-.hero-desc {
-  font-size: 0.9rem;
-  line-height: 1.7;
-  color: rgba(255,255,255,0.78);
-  font-weight: 300;
-  margin-bottom: 28px;
-}
-.hero-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: #fff;
-  color: #000;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 13px 36px;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-  transition: background 0.18s, transform 0.15s;
-}
-.hero-btn:hover { background: rgba(255,255,255,0.82); transform: scale(1.03); }
+/* shared overlay gradient */
+.hero-fade{position:absolute;inset:0;background:linear-gradient(to right,rgba(20,20,20,.96) 0%,rgba(20,20,20,.55) 52%,rgba(20,20,20,.05) 100%),linear-gradient(to top,rgba(20,20,20,1) 0%,transparent 52%);pointer-events:none;z-index:1}
 
-/* ─── MESSAGE STRIP ─── */
-.message-strip {
-  margin: 36px 52px 0;
-  padding: 22px 30px;
-  border-left: 4px solid var(--red);
-  background: rgba(229,9,20,0.07);
-  border-radius: 0 6px 6px 0;
-}
-.message-strip .from {
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--red);
-  margin-bottom: 8px;
-}
-.message-strip .words {
-  font-size: 0.93rem;
-  line-height: 1.75;
-  font-style: italic;
-  font-weight: 300;
-  color: rgba(255,255,255,0.8);
+/* text content */
+.hero-body{position:absolute;bottom:88px;left:52px;max-width:560px;z-index:2}
+.hero-tagline{font-size:.82rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.52);margin-bottom:10px;letter-spacing:.5px}
+.hero-badge{display:inline-block;background:var(--red);color:#fff;font-size:.62rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;padding:5px 14px;border-radius:2px;margin-bottom:14px}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,5.5rem);line-height:.95;margin-bottom:16px;text-shadow:0 2px 30px rgba(0,0,0,.9);letter-spacing:1px}
+.hero-desc{font-size:.9rem;line-height:1.7;color:rgba(255,255,255,.78);font-weight:300;margin-bottom:28px}
+.hero-btn{display:inline-flex;align-items:center;gap:10px;background:#fff;color:#000;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;padding:13px 36px;border-radius:4px;border:none;cursor:pointer;transition:background .18s,transform .15s}
+.hero-btn:hover{background:rgba(255,255,255,.82);transform:scale(1.03)}
+@keyframes heroIn{from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)}}
+.hero-body.anim{animation:heroIn .6s ease both}
+
+/* dot indicators */
+.hero-dots{position:absolute;bottom:30px;left:52px;display:flex;gap:7px;z-index:3}
+.hero-dot{height:3px;width:24px;border-radius:2px;background:rgba(255,255,255,.25);cursor:pointer;transition:width .35s,background .35s;border:none}
+.hero-dot.active{width:42px;background:#fff}
+
+/* ── MESSAGE STRIP ── */
+.message-strip{margin:36px 52px 0;padding:22px 30px;border-left:4px solid var(--red);background:rgba(229,9,20,.07);border-radius:0 6px 6px 0}
+.message-strip .from{font-size:.62rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);margin-bottom:8px}
+.message-strip .words{font-size:.93rem;line-height:1.75;font-style:italic;font-weight:300;color:rgba(255,255,255,.8)}
+
+/* ── MOVIES GRID ── */
+.movies-section{margin:48px 52px 0}
+.section-label{font-size:1.25rem;font-weight:600;margin-bottom:22px;letter-spacing:.3px}
+.movies-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+
+.movie-card{cursor:pointer;position:relative;border-radius:5px;overflow:hidden;background:var(--bg3);width:100%;padding-top:150%;height:0;transition:transform .25s,box-shadow .25s}
+.movie-card:hover{transform:scale(1.07) translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.75);z-index:5}
+.movie-card:hover .card-hover{opacity:1}
+
+.poster-img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.poster-fallback{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--bg3);color:var(--muted)}
+.poster-fallback .pf-icon{font-size:2.2rem;opacity:.3}
+.poster-fallback .pf-name{font-size:.55rem;letter-spacing:1px;text-transform:uppercase;opacity:.4}
+
+.card-hover{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.3) 50%,transparent 100%);opacity:0;transition:opacity .2s;display:flex;flex-direction:column;justify-content:flex-end;padding:16px 10px}
+.ch-title{font-size:.78rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}
+.ch-meta{font-size:.62rem;color:var(--muted);margin-bottom:10px}
+.ch-play{display:inline-flex;align-items:center;gap:6px;background:#fff;color:#000;font-size:.7rem;font-weight:600;padding:6px 14px;border-radius:3px;width:fit-content}
+
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:500;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}
+.modal-overlay.open{display:flex}
+.modal-box{background:#181818;border-radius:10px;overflow:hidden;width:100%;max-width:860px;max-height:92vh;overflow-y:auto;position:relative;animation:popIn .28s cubic-bezier(.34,1.4,.64,1) both;scrollbar-width:thin;scrollbar-color:#333 transparent}
+@keyframes popIn{from{opacity:0;transform:scale(.88)} to{opacity:1;transform:scale(1)}}
+.modal-box::-webkit-scrollbar{width:5px}
+.modal-box::-webkit-scrollbar-thumb{background:#333;border-radius:3px}
+
+.modal-top{position:relative;width:100%;background:#000}
+.modal-poster{width:100%;max-height:520px;object-fit:contain;object-position:center;display:block;background:#000}
+.modal-poster-fallback{width:100%;height:320px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a0808,#2d1010);font-size:5rem;opacity:.3}
+.modal-video{display:none;width:100%;aspect-ratio:16/9;max-height:70vh;background:#000;object-fit:contain;outline:none}
+.modal-top-fade{position:absolute;bottom:0;left:0;right:0;height:140px;background:linear-gradient(to top,#181818 0%,transparent 100%);pointer-events:none}
+.modal-play-btn{position:absolute;bottom:28px;left:32px;display:inline-flex;align-items:center;gap:10px;background:#fff;color:#000;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:700;padding:13px 34px;border-radius:4px;border:none;cursor:pointer;z-index:2;transition:background .18s,transform .15s}
+.modal-play-btn:hover{background:rgba(255,255,255,.82);transform:scale(1.04)}
+.modal-close{position:absolute;top:14px;right:14px;background:rgba(0,0,0,.75);color:#fff;border:none;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:background .15s}
+.modal-close:hover{background:#000}
+
+.modal-body{padding:6px 36px 40px}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;letter-spacing:1.5px;line-height:1;margin-bottom:6px}
+.modal-tagline{font-size:.88rem;font-style:italic;color:rgba(255,255,255,.55);margin-bottom:14px;font-weight:300}
+.modal-meta{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.m-year{font-size:.82rem;color:var(--muted)}
+.m-genre{font-size:.65rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;background:rgba(229,9,20,.14);color:#ff7070;padding:4px 10px;border-radius:3px;border:1px solid rgba(229,9,20,.28)}
+.m-rating{font-size:.82rem;color:#f5c518;font-weight:600}
+.m-runtime{font-size:.78rem;color:var(--muted);font-style:italic}
+.modal-desc{font-size:.93rem;line-height:1.8;color:rgba(255,255,255,.76);font-weight:300;margin-bottom:20px}
+.modal-starring{font-size:.78rem;color:var(--muted);margin-bottom:6px}
+.modal-starring span{color:rgba(255,255,255,.7)}
+.modal-themes{font-size:.75rem;color:var(--muted);margin-bottom:20px}
+.modal-themes span{color:rgba(255,255,255,.6)}
+.modal-review{padding:16px 20px;background:rgba(229,9,20,.07);border-left:3px solid var(--red);border-radius:0 5px 5px 0;font-size:.9rem;font-style:italic;color:rgba(255,255,255,.68);line-height:1.65}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){.movies-grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:800px){.movies-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){
+  .movies-grid{grid-template-columns:repeat(2,1fr)}
+  .logo-bar,.movies-section,.message-strip{padding-left:20px;padding-right:20px}
+  .hero-body{left:20px;right:20px;bottom:56px}
+  .hero-dots{left:20px}
+  #back-btn{right:20px}
+  .modal-body{padding:6px 20px 32px}
+  .modal-title{font-size:2rem}
 }
 
-/* ─── MOVIES SECTION ─── */
-.movies-section {
-  margin: 48px 52px 0;
-}
-.section-label {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 22px;
-  letter-spacing: 0.3px;
-}
-
-/* 4-column grid */
-.movies-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-}
-
-/* Each poster card */
-.movie-card {
-  cursor: pointer;
-  position: relative;
-  border-radius: 5px;
-  overflow: hidden;
-  background: var(--bg3);
-  /* Use padding-top trick so aspect-ratio works reliably across all browsers */
-  width: 100%;
-  padding-top: 150%; /* 2:3 ratio */
-  height: 0;
-  transition: transform 0.25s, box-shadow 0.25s;
-}
-.movie-card:hover {
-  transform: scale(1.07) translateY(-5px);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.75);
-  z-index: 5;
-}
-.movie-card:hover .card-hover { opacity: 1; }
-
-/* Poster image — named poster_1.png … poster_8.png */
-.poster-img {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  display: block;
-}
-/* Shown if image fails to load */
-.poster-fallback {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  background: var(--bg3);
-  color: var(--muted);
-}
-.poster-fallback .pf-icon { font-size: 2.8rem; opacity: 0.35; }
-.poster-fallback .pf-name { font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase; opacity: 0.45; }
-
-/* Hover overlay */
-.card-hover {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
-  opacity: 0;
-  transition: opacity 0.2s;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 16px 12px;
-}
-.ch-title {
-  font-size: 0.82rem;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 3px;
-}
-.ch-meta { font-size: 0.65rem; color: var(--muted); margin-bottom: 10px; }
-.ch-play {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #fff;
-  color: #000;
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 6px 14px;
-  border-radius: 3px;
-  width: fit-content;
-}
-
-/* ─── MODAL ─── */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.88);
-  z-index: 500;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  backdrop-filter: blur(8px);
-}
-.modal-overlay.open { display: flex; }
-
-.modal-box {
-  background: #181818;
-  border-radius: 10px;
-  overflow: hidden;
-  width: 100%;
-  max-width: 860px;
-  max-height: 92vh;
-  overflow-y: auto;
-  position: relative;
-  animation: popIn 0.28s cubic-bezier(0.34,1.4,0.64,1) both;
-  scrollbar-width: thin;
-  scrollbar-color: #333 transparent;
-}
-@keyframes popIn {
-  from { opacity: 0; transform: scale(0.88); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
-/* Video / poster area at top of modal */
-.modal-top {
-  position: relative;
-  width: 100%;
-  /* 16:9 when video playing, poster ratio otherwise */
-  background: #000;
-}
-.modal-poster {
-  width: 100%;
-  max-height: 520px;
-  object-fit: contain;
-  object-position: center center;
-  display: block;
-  background: #000;
-}
-.modal-poster-fallback {
-  width: 100%;
-  height: 320px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #1a0808, #2d1010);
-  font-size: 5rem;
-  opacity: 0.3;
-}
-/* Video element — hidden until Play is clicked */
-.modal-video {
-  display: none;
-  width: 100%;
-  /* 16:9 box, video fits inside without cropping */
-  aspect-ratio: 16/9;
-  max-height: 70vh;
-  background: #000;
-  object-fit: contain;
-  outline: none;
-}
-/* Gradient over poster bottom */
-.modal-top-fade {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 140px;
-  background: linear-gradient(to top, #181818 0%, transparent 100%);
-  pointer-events: none;
-}
-/* Play btn floating over poster */
-.modal-play-overlay {
-  position: absolute;
-  bottom: 28px;
-  left: 32px;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: #fff;
-  color: #000;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  padding: 13px 34px;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-  z-index: 2;
-  transition: background 0.18s, transform 0.15s;
-}
-.modal-play-overlay:hover { background: rgba(255,255,255,0.82); transform: scale(1.04); }
-
-/* Close */
-.modal-close {
-  position: absolute;
-  top: 14px; right: 14px;
-  background: rgba(0,0,0,0.75);
-  color: #fff;
-  border: none;
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  font-size: 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  transition: background 0.15s;
-}
-.modal-close:hover { background: rgba(0,0,0,1); }
-
-/* Modal text body */
-.modal-body {
-  padding: 6px 36px 40px;
-}
-.modal-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 2.6rem;
-  letter-spacing: 1.5px;
-  line-height: 1;
-  margin-bottom: 6px;
-}
-.modal-tagline {
-  font-size: 0.88rem;
-  font-style: italic;
-  color: rgba(255,255,255,0.55);
-  margin-bottom: 14px;
-  font-weight: 300;
-}
-.modal-meta {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-.m-year { font-size: 0.82rem; color: var(--muted); }
-.m-genre {
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  background: rgba(229,9,20,0.14);
-  color: #ff7070;
-  padding: 4px 10px;
-  border-radius: 3px;
-  border: 1px solid rgba(229,9,20,0.28);
-}
-.m-rating { font-size: 0.82rem; color: #f5c518; font-weight: 600; }
-.m-runtime { font-size: 0.78rem; color: var(--muted); font-style: italic; }
-.modal-desc {
-  font-size: 0.93rem;
-  line-height: 1.8;
-  color: rgba(255,255,255,0.76);
-  font-weight: 300;
-  margin-bottom: 20px;
-}
-.modal-starring {
-  font-size: 0.78rem;
-  color: var(--muted);
-  margin-bottom: 6px;
-}
-.modal-starring span { color: rgba(255,255,255,0.7); }
-.modal-themes {
-  font-size: 0.75rem;
-  color: var(--muted);
-  margin-bottom: 20px;
-}
-.modal-themes span { color: rgba(255,255,255,0.6); }
-.modal-review {
-  padding: 16px 20px;
-  background: rgba(229,9,20,0.07);
-  border-left: 3px solid var(--red);
-  border-radius: 0 5px 5px 0;
-  font-size: 0.9rem;
-  font-style: italic;
-  color: rgba(255,255,255,0.68);
-  line-height: 1.65;
-}
-
-/* ─── RESPONSIVE ─── */
-@media (max-width: 1000px) {
-  .movies-grid { grid-template-columns: repeat(3, 1fr); }
-}
-@media (max-width: 700px) {
-  .movies-grid { grid-template-columns: repeat(2, 1fr); }
-  .logo-bar, .movies-section, .message-strip { padding-left: 20px; padding-right: 20px; }
-  .hero-body { left: 20px; right: 20px; bottom: 50px; }
-  #back-btn { right: 20px; }
-  .modal-body { padding: 6px 20px 32px; }
-  .modal-title { font-size: 2rem; }
-}
-
-/* Scrollbar for modal */
-.modal-box::-webkit-scrollbar { width: 5px; }
-.modal-box::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(22px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.fadein { animation: fadeUp 0.5s ease both; }
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)}}
+.fadein{animation:fadeUp .5s ease both}
 </style>
 </head>
 <body>
 
-<!-- Logo -->
 <div class="logo-bar">
   <div class="logo">NidhiFlix</div>
   <div class="logo-sub">Curated just for you ✦</div>
 </div>
 
-<!-- Back btn -->
-<button id="back-btn" onclick="goBack()">← Back</button>
+<button id="back-btn" onclick="goBack()">&#8592; Back</button>
 
-<!-- ════════════════════════════
-     SCREEN 1 — WHO'S WATCHING
-════════════════════════════ -->
+<!-- ═══════════════════════ PROFILE ═══════════════════════ -->
 <div id="profile-screen">
   <p class="profile-who">Who's watching?</p>
   <div class="profile-wrap fadein" onclick="enterBrowse()">
     <div class="p-avatar">
-      <!-- 🔁 FILE: profile.png → replace below emoji div with:
-           <img src="profile.png" alt="Nidhi" style="width:100%;height:100%;object-fit:cover;display:block;">  -->
+      <!-- 🔁 FILE: replace emoji div with <img src="profile.png" alt="Nidhi" style="width:100%;height:100%;object-fit:cover;display:block;"> -->
       <div class="p-avatar-emoji">🌸</div>
     </div>
     <span class="p-name">Nidhi</span>
   </div>
 </div>
 
-<!-- ════════════════════════════
-     SCREEN 2 — BROWSE
-════════════════════════════ -->
+<!-- ═══════════════════════ BROWSE ═══════════════════════ -->
 <div id="browse-screen">
 
-  <!-- HERO — shows poster_1.png as featured -->
-  <div class="hero">
-    <!-- 🔁 FILE: poster_1.png -->
-    <img class="hero-img" src="poster_1.png" alt="My Safe Place"
-         onerror="this.style.display='none';document.getElementById('hero-fallback').style.display='flex'">
-    <div class="hero-fallback" id="hero-fallback" style="display:none;">🎬</div>
+  <!-- HERO: slides injected by JS -->
+  <div class="hero" id="hero">
     <div class="hero-fade"></div>
-    <div class="hero-body">
-      <div class="hero-tagline">"Three people. Countless memories. One safe place."</div>
-      <div class="hero-tag">★ Nidhi's Pick</div>
-      <h1 class="hero-title">My Safe Place</h1>
-      <p class="hero-desc">Sometimes, family isn't the people you're born with—it's the people who choose you. A heartwarming story about trust, comfort, loyalty, and the rare people who quietly become your safe place.</p>
-      <button class="hero-btn" onclick="openModal(0)">▶ &nbsp;Play</button>
+    <div class="hero-body" id="hero-body">
+      <div class="hero-tagline" id="hero-tagline"></div>
+      <div class="hero-badge">&#9733; Nidhi's Collection</div>
+      <h1 class="hero-title" id="hero-title"></h1>
+      <p class="hero-desc" id="hero-desc"></p>
+      <button class="hero-btn" id="hero-btn" onclick="heroPlay()">&#9654;&nbsp;&nbsp;Play</button>
     </div>
+    <div class="hero-dots" id="hero-dots"></div>
   </div>
 
   <!-- MESSAGE -->
   <div class="message-strip">
     <div class="from">A little note for you 💌</div>
-    <div class="words">
-      "I built this just for you, Nidhi. Every story here is one I picked thinking of you — some that made me laugh, some that made me cry, and some I just knew you'd love. Press play on any of them. I hope they feel like a warm hug. — With all my love 💕"
-    </div>
+    <div class="words">"I built this just for you, Nidhi. Every story here is one I picked thinking of you — some that made me laugh, some that made me cry, and some I just knew you'd love. Press play on any of them. I hope they feel like a warm hug. — With all my love 💕"</div>
   </div>
 
-  <!-- MOVIES GRID — 8 films -->
+  <!-- GRID -->
   <div class="movies-section">
     <div class="section-label">🎬 Nidhi's Collection</div>
     <div class="movies-grid" id="movies-grid"></div>
   </div>
 
-</div><!-- /browse-screen -->
+</div><!-- /browse -->
 
-<!-- ════════════════════════════
-     MODAL
-════════════════════════════ -->
+<!-- ═══════════════════════ MODAL ═══════════════════════ -->
 <div class="modal-overlay" id="modal" onclick="overlayClick(event)">
   <div class="modal-box" id="modal-box">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-
-    <!-- Top: poster → switches to video on play -->
+    <button class="modal-close" onclick="closeModal()">&#x2715;</button>
     <div class="modal-top" id="modal-top">
       <img class="modal-poster" id="modal-poster" src="" alt=""
            onerror="this.style.display='none';document.getElementById('modal-poster-fb').style.display='flex'">
       <div class="modal-poster-fallback" id="modal-poster-fb" style="display:none;">🎬</div>
       <video class="modal-video" id="modal-video" controls playsinline></video>
       <div class="modal-top-fade" id="modal-top-fade"></div>
-      <button class="modal-play-overlay" id="modal-play-btn" onclick="playVideo()">▶ &nbsp;Play Movie</button>
+      <button class="modal-play-btn" id="modal-play-btn" onclick="playVideo()">&#9654;&nbsp;&nbsp;Play Movie</button>
     </div>
-
-    <!-- Text -->
     <div class="modal-body">
-      <div class="modal-title"    id="m-title"></div>
-      <div class="modal-tagline"  id="m-tagline"></div>
+      <div class="modal-title"   id="m-title"></div>
+      <div class="modal-tagline" id="m-tagline"></div>
       <div class="modal-meta">
         <span class="m-year"    id="m-year"></span>
         <span class="m-genre"   id="m-genre"></span>
         <span class="m-rating"  id="m-rating"></span>
         <span class="m-runtime" id="m-runtime"></span>
       </div>
-      <p class="modal-desc"       id="m-desc"></p>
-      <p class="modal-starring"   id="m-starring"></p>
-      <p class="modal-themes"     id="m-themes"></p>
+      <div class="modal-desc"     id="m-desc"></div>
+      <p  class="modal-starring"  id="m-starring"></p>
+      <p  class="modal-themes"    id="m-themes"></p>
       <div class="modal-review"   id="m-review"></div>
     </div>
   </div>
 </div>
 
 <script>
-/* ══════════════════════════════════════════════════════════════
-   FILE NAMING GUIDE
-   ─────────────────
-   Posters : poster_1.png  …  poster_8.png
-   Videos  : video_1.mp4   …  video_8.mp4
-   Profile : profile.png
-
-   Put nidhiflix.html + all these files in the SAME folder.
-   Open nidhiflix.html in Chrome/Safari — done.
-══════════════════════════════════════════════════════════════ */
-
+/* ═══════════════════════════════════════════════════════════
+   FILE NAMING
+   poster_1.png … poster_10.png
+   video_1.mp4  … video_10.mp4   (or driveId for big files)
+   profile.png
+═══════════════════════════════════════════════════════════ */
 const movies = [
-  /* ── 1 ── */
   {
-    poster : "poster_1.png",
-    video  : "video_1.mp4",
-    title  : "My Safe Place",
-    tagline: "\"Three people. Countless memories. One safe place.\"",
-    year   : "Always",
-    genre  : "Friendship Drama • Feel-Good • Slice of Life",
-    rating : "⭐ 9.9 / 10",
-    runtime: "A lifetime of memories",
-    desc   : "Sometimes, family isn't the people you're born with—it's the people who choose you.\n\nWhen life became complicated and trust became difficult, Nidhi found two unexpected companions who stood beside her through every high and low. Through countless conversations, laughter that arrived at exactly the right moments, and support that never needed to be asked for, a simple friendship grew into something far more meaningful.\n\nTogether, Nidhi, Vinay, and Teju created a space where they could be completely themselves—through every storm, every celebration, and every chapter in between.\n\nA heartwarming story about trust, comfort, loyalty, and the rare people who quietly become your safe place.",
-    starring: "Starring: Nidhi, Vinay & Teju",
-    themes : "Themes: Trust • Support • Laughter • Memories • Late-Night Talks • Unconditional Friendship",
-    review : "\"Some people don't just enter your life. They become your safe place.\" ❤️",
-    heroCard: true
+    poster:"poster_1.png", video:"video_1.mp4", driveId:null,
+    title:"My Safe Place",
+    tagline:"\u201cThree people. Countless memories. One safe place.\u201d",
+    year:"Always", genre:"Friendship Drama \u2022 Feel-Good \u2022 Slice of Life",
+    rating:"\u2B50 9.9 / 10", runtime:"A lifetime of memories",
+    desc:"Sometimes, family isn\u2019t the people you\u2019re born with\u2014it\u2019s the people who choose you.\n\nWhen life became complicated and trust became difficult, Nidhi found two unexpected companions who stood beside her through every high and low. Through countless conversations, laughter that arrived at exactly the right moments, and support that never needed to be asked for, a simple friendship grew into something far more meaningful.\n\nTogether, Nidhi, Vinay, and Teju created a space where they could be completely themselves\u2014through every storm, every celebration, and every chapter in between.\n\nA heartwarming story about trust, comfort, loyalty, and the rare people who quietly become your safe place.",
+    starring:"Starring: Nidhi, Vinay & Teju",
+    themes:"Themes: Trust \u2022 Support \u2022 Laughter \u2022 Memories \u2022 Late-Night Talks \u2022 Unconditional Friendship",
+    review:"\u201cSome people don\u2019t just enter your life. They become your safe place.\u201d \u2764\uFE0F"
   },
-  /* ── 2 ── */
   {
-    poster : "poster_2.png",
-    video  : "video_2.mp4",
-    title  : "Baby-Tron & Dhidhi-Tron",
-    tagline: "\"The strongest alliance in the NidhiFlix universe.\"",
-    year   : "Ongoing",
-    genre  : "Family • Feel-Good • Adventure",
-    rating : "⭐ 10 / 10",
-    runtime: "Every mission, every day",
-    desc   : "In a universe filled with superheroes, robots, and endless imagination, Baby-Tron knows exactly who the coolest hero is—Dhidhi-Tron.\n\nWhether it's learning something new, sharing adventures, or simply spending time together, every day becomes a mission worth remembering. To him, she's a teacher, a teammate, and the person who can make any ordinary day extraordinary.\n\nA heartwarming story of imagination, laughter, and the unbreakable bond between a little boy and the aunt he looks up to more than anyone else.",
-    starring: "Starring: Nidhi & Her Little Hero",
-    themes : "Themes: Imagination • Laughter • Family • Unconditional Love • Adventure",
-    review : "\"One tiny hero. One giant role model.\" 🚀",
-    heroCard: false
+    poster:"poster_2.png", video:"video_2.mp4", driveId:null,
+    title:"Baby-Tron & Dhidhi-Tron",
+    tagline:"\u201cThe strongest alliance in the NidhiFlix universe.\u201d",
+    year:"Ongoing", genre:"Family \u2022 Feel-Good \u2022 Adventure",
+    rating:"\u2B50 10 / 10", runtime:"Every mission, every day",
+    desc:"In a universe filled with superheroes, robots, and endless imagination, Baby-Tron knows exactly who the coolest hero is\u2014Dhidhi-Tron.\n\nWhether it\u2019s learning something new, sharing adventures, or simply spending time together, every day becomes a mission worth remembering. To him, she\u2019s a teacher, a teammate, and the person who can make any ordinary day extraordinary.\n\nA heartwarming story of imagination, laughter, and the unbreakable bond between a little boy and the aunt he looks up to more than anyone else.",
+    starring:"Starring: Nidhi & Her Little Hero",
+    themes:"Themes: Imagination \u2022 Laughter \u2022 Family \u2022 Unconditional Love \u2022 Adventure",
+    review:"\u201cOne tiny hero. One giant role model.\u201d \uD83D\uDE80"
   },
-  /* ── 3 ── */
   {
-    poster : "poster_3.png",
-    video  : "video_3.mp4",
-    title  : "The House We Found",
-    tagline: "\"Two strangers. One random day. A friendship that felt like home.\"",
-    year   : "From the very beginning",
-    genre  : "Friendship • Feel-Good • Slice of Life • Coming of Age",
-    rating : "⭐ 10 / 10",
-    runtime: "From chance encounter to forever",
-    desc   : "Some people spend years searching for friendships that feel like home. Nidhi and Pooja found theirs by accident.\n\nWhat began as two strangers meeting in the same house on the same day slowly became a bond built on shared dreams, endless conversations, spontaneous laughter, and an understanding that never needed explanations. Between dance plans that are still waiting to happen, unforgettable birthday surprises, and memories that feel larger than life, they discovered something rare—a friendship that felt like family from the very beginning.\n\nEven when life gets busy and days pass without a conversation, nothing really changes. Because some people don't stay close through constant contact—they stay close through certainty.\n\nA heartwarming story about chance encounters, shared dreams, chosen family, and finding home in someone you never expected to meet.",
-    starring: "Starring: Nidhi & Pooja",
-    themes : "Themes: Shared Dreams • Dance • Laughter • Family • Memories • Unbreakable Bonds",
-    review : "\"We met as strangers. Somehow, we ended up feeling like family.\" ❤️",
-    heroCard: false
+    poster:"poster_3.png", video:"video_3.mp4", driveId:null,
+    title:"The House We Found",
+    tagline:"\u201cTwo strangers. One random day. A friendship that felt like home.\u201d",
+    year:"From the very beginning", genre:"Friendship \u2022 Feel-Good \u2022 Slice of Life \u2022 Coming of Age",
+    rating:"\u2B50 10 / 10", runtime:"From chance encounter to forever",
+    desc:"Some people spend years searching for friendships that feel like home. Nidhi and Pooja found theirs by accident.\n\nWhat began as two strangers meeting in the same house on the same day slowly became a bond built on shared dreams, endless conversations, spontaneous laughter, and an understanding that never needed explanations.\n\nEven when life gets busy and days pass without a conversation, nothing really changes. Because some people don\u2019t stay close through constant contact\u2014they stay close through certainty.\n\nA heartwarming story about chance encounters, shared dreams, chosen family, and finding home in someone you never expected to meet.",
+    starring:"Starring: Nidhi & Pooja",
+    themes:"Themes: Shared Dreams \u2022 Dance \u2022 Laughter \u2022 Family \u2022 Memories \u2022 Unbreakable Bonds",
+    review:"\u201cWe met as strangers. Somehow, we ended up feeling like family.\u201d \u2764\uFE0F"
   },
-  /* ── 4 ── */
   {
-    poster : "poster_4.png",
-    video  : "video_4.mp4",
-    title  : "Aditi & Naina",
-    tagline: "\"Some friendships don't begin with similarities. They become them.\"",
-    year   : "Every version of us",
-    genre  : "Friendship • Coming of Age • Feel-Good Drama",
-    rating : "⭐ 10 / 10 — according to Aditi & Naina",
-    runtime: "Every version of us",
-    desc   : "There are friends who walk beside you through life, and then there are friends who quietly become a part of who you are.\n\nWhat started as two different personalities slowly turned into a friendship built on trust, laughter, endless conversations, and a connection that never needed explanations. Through changing seasons, growing dreams, and every version of themselves, Nidhi and Khushi discovered a bond that felt less like friendship and more like reflection.\n\nWhen one forgot her spark, the other reminded her where to find it. When life became overwhelming, they became each other's comfort, confidence, and reality check. Somewhere between shared memories and countless little moments, they stopped being just friends and became mirrors.\n\nNot because they were the same. Because they understood each other completely.",
-    starring: "Starring: Nidhi & Khushi",
-    themes : "Themes: Self-Discovery • Growth • Loyalty • Understanding • Memories • Reflection",
-    review : "\"She didn't change me. She reminded me who I was.\" ✨",
-    heroCard: false
+    poster:"poster_4.png", video:"video_4.mp4", driveId:null,
+    title:"Aditi & Naina",
+    tagline:"\u201cSome friendships don\u2019t begin with similarities. They become them.\u201d",
+    year:"Every version of us", genre:"Friendship \u2022 Coming of Age \u2022 Feel-Good Drama",
+    rating:"\u2B50 10 / 10 \u2014 according to Aditi & Naina", runtime:"Every version of us",
+    desc:"There are friends who walk beside you through life, and then there are friends who quietly become a part of who you are.\n\nWhat started as two different personalities slowly turned into a friendship built on trust, laughter, endless conversations, and a connection that never needed explanations.\n\nWhen one forgot her spark, the other reminded her where to find it. Somewhere between shared memories and countless little moments, they stopped being just friends and became mirrors.\n\nNot because they were the same. Because they understood each other completely.",
+    starring:"Starring: Nidhi & Khushi",
+    themes:"Themes: Self-Discovery \u2022 Growth \u2022 Loyalty \u2022 Understanding \u2022 Memories \u2022 Reflection",
+    review:"\u201cShe didn\u2019t change me. She reminded me who I was.\u201d \u2728"
   },
-  /* ── 5 ── */
   {
-    poster : "poster_5.png",
-    video  : "video_5.mp4",
-    title  : "Fight Club (But With Feelings)",
-    tagline: "\"We fight. We forgive. We repeat.\"",
-    year   : "Since forever",
-    genre  : "Comedy • Friendship • Chaos • Slice of Life",
-    rating : "⭐ 10 / 10",
-    runtime: "Depends on the argument",
-    desc   : "Every friendship has disagreements.\n\nNidhi and Anish turned them into a competitive sport.\n\nFrom pointless debates and dramatic arguments to unsolicited life advice and questionable decision-making, these two have spent years proving that friendship and chaos can peacefully coexist.\n\nSomehow, every fight ends the same way: with laughter, forgiveness, and another argument waiting just around the corner.\n\nNidhi never treated him like a junior. Anish never treated her like just another friend. Somewhere between all the teasing, emotional damage, and mutual stubbornness, they became each other's favorite person to annoy.\n\nThey may not always agree. They may not always be right. But they always come back.",
-    starring: "Starring: Nidhi & Anish",
-    themes : "Themes: Arguing • Teasing • Forgiveness • Loyalty • Emotional Damage • Unconditional Friendship",
-    review : "\"A comedy about friendship, loyalty, emotional warfare, and two people who somehow survive each other every single day.\" 😂",
-    heroCard: false
+    poster:"poster_5.png", video:"video_5.mp4", driveId:null,
+    title:"Fight Club (But With Feelings)",
+    tagline:"\u201cWe fight. We forgive. We repeat.\u201d",
+    year:"Since forever", genre:"Comedy \u2022 Friendship \u2022 Chaos \u2022 Slice of Life",
+    rating:"\u2B50 10 / 10", runtime:"Depends on the argument",
+    desc:"Every friendship has disagreements.\n\nNidhi and Anish turned them into a competitive sport.\n\nFrom pointless debates and dramatic arguments to unsolicited life advice and questionable decision-making, these two have spent years proving that friendship and chaos can peacefully coexist.\n\nSomehow, every fight ends the same way: with laughter, forgiveness, and another argument waiting just around the corner.\n\nThey may not always agree. They may not always be right. But they always come back.",
+    starring:"Starring: Nidhi & Anish",
+    themes:"Themes: Arguing \u2022 Teasing \u2022 Forgiveness \u2022 Loyalty \u2022 Emotional Damage \u2022 Unconditional Friendship",
+    review:"\u201cA comedy about friendship, loyalty, emotional warfare, and two people who somehow survive each other every single day.\u201d \uD83D\uDE02"
   },
-  /* ── 6 ── VIDEO FROM GOOGLE DRIVE
-     🔁 Replace driveId with the file ID from inside your Drive folder.
-        Open the folder → right-click the video file → "Get link" → copy the ID from the URL
-        e.g. https://drive.google.com/file/d/THIS_PART_IS_THE_ID/view  */
   {
-    poster  : "poster_6.png",
-    video   : null,
-    driveId : "1U92F1usf6QMrv-VgSW7AOosSZnKW_HfD",
-    title   : "Call Me When You Reach",
-    tagline : "\"Some friendships say 'take care.' Ours says 'call me when you reach.'\"",
-    year    : "Every day",
-    genre   : "Feel-Good • Friendship • Slice of Life",
-    rating  : "⭐ 10 / 10",
-    runtime : "Until the 'Reached?' message arrives",
-    desc    : "Some people show they care through grand gestures.\n\nNidhi and Hitesh built their friendship through the small things.\n\nThe messages asking if you've eaten. The reminders to drive slowly. The calls that last longer than planned. The quiet check-ins that arrive exactly when they're needed. Somewhere between everyday conversations and countless little moments of concern, a friendship grew into something deeply meaningful.\n\nFor Nidhi, he is someone worth worrying about. For Hitesh, she is more than a friend—she is a mentor, a guide, and one of the people whose advice genuinely matters.\n\nThere are no dramatic speeches. No extraordinary promises. Just the comforting certainty that no matter where life takes them, someone will always be waiting for that message: \"Reached home?\"",
-    starring: "Starring: Nidhi & Hitesh",
-    themes  : "Themes: Care • Mentorship • Trust • Everyday Moments • Looking Out For Each Other",
-    review  : "\"Some people make your day better. Some people make sure you get home safely.\" ❤️",
-    heroCard: false
+    poster:"poster_6.png", video:null, driveId:"1U92F1usf6QMrv-VgSW7AOosSZnKW_HfD",
+    title:"Call Me When You Reach",
+    tagline:"\u201cSome friendships say \u2018take care.\u2019 Ours says \u2018call me when you reach.\u2019\u201d",
+    year:"Every day", genre:"Feel-Good \u2022 Friendship \u2022 Slice of Life",
+    rating:"\u2B50 10 / 10", runtime:"Until the \u2018Reached?\u2019 message arrives",
+    desc:"Some people show they care through grand gestures.\n\nNidhi and Hitesh built their friendship through the small things.\n\nThe messages asking if you\u2019ve eaten. The reminders to drive slowly. The calls that last longer than planned. The quiet check-ins that arrive exactly when they\u2019re needed.\n\nFor Nidhi, he is someone worth worrying about. For Hitesh, she is more than a friend\u2014she is a mentor, a guide, and one of the people whose advice genuinely matters.\n\nJust the comforting certainty that no matter where life takes them, someone will always be waiting for that message: \u201cReached home?\u201d",
+    starring:"Starring: Nidhi & Hitesh",
+    themes:"Themes: Care \u2022 Mentorship \u2022 Trust \u2022 Everyday Moments \u2022 Looking Out For Each Other",
+    review:"\u201cSome people make your day better. Some people make sure you get home safely.\u201d \u2764\uFE0F"
   },
-  /* ── 7 ── */
   {
-    poster  : "poster_7.png",
-    video   : "video_7.mp4",
-    driveId : null,
-    title   : "My Everything",
-    tagline : "\"My first home. My first teacher. My first hero. My everything.\"",
-    year    : "A lifetime",
-    genre   : "Family • Drama • Love Story",
-    rating  : "⭐ ∞ / 10",
-    runtime : "A lifetime",
-    desc    : "There are people who walk into our lives and change them.\n\nThen there are people who give us life itself.\n\nBefore every friendship, every dream, every achievement, and every memory, there was her. The woman who taught Nidhi what kindness looks like, what strength feels like, and how love can exist without conditions. Through countless sacrifices, silent prayers, endless support, and a heart that never stopped giving, she became the foundation upon which every beautiful part of Nidhi's life was built.\n\nShe is her first home, her safest place, her greatest teacher, and the one person whose happiness means more than anything else.\n\nSome bonds can be explained. This one cannot.",
-    starring: "Starring: Nidhi & Her Mother",
-    themes  : "Themes: Unconditional Love • Sacrifice • Gratitude • Family • Strength • Home",
-    review  : "\"If there is anything beautiful about me, it is because I learned it from her.\" ❤️",
-    heroCard: false
+    poster:"poster_7.png", video:"video_7.mp4", driveId:null,
+    title:"My Everything",
+    tagline:"\u201cMy first home. My first teacher. My first hero. My everything.\u201d",
+    year:"A lifetime", genre:"Family \u2022 Drama \u2022 Love Story",
+    rating:"\u2B50 \u221E / 10", runtime:"A lifetime",
+    desc:"There are people who walk into our lives and change them.\n\nThen there are people who give us life itself.\n\nBefore every friendship, every dream, every achievement, and every memory, there was her. The woman who taught Nidhi what kindness looks like, what strength feels like, and how love can exist without conditions.\n\nShe is her first home, her safest place, her greatest teacher, and the one person whose happiness means more than anything else.\n\nSome bonds can be explained. This one cannot.",
+    starring:"Starring: Nidhi & Her Mother",
+    themes:"Themes: Unconditional Love \u2022 Sacrifice \u2022 Gratitude \u2022 Family \u2022 Strength \u2022 Home",
+    review:"\u201cIf there is anything beautiful about me, it is because I learned it from her.\u201d \u2764\uFE0F"
   },
-  /* ── 8 ── VIDEO FROM GOOGLE DRIVE */
   {
-    poster  : "poster_8.png",
-    video   : null,
-    driveId : "1UOWYTO-vHqNi0Glt3QOFENuajk-MDFYg",
-    title   : "The Little Girl From School",
-    tagline : "\"I never imagined she'd become my greatest comfort.\"",
-    year    : "From the school corridor to forever",
-    genre   : "Friendship • Nostalgia • Coming of Age • Feel-Good Drama",
-    rating  : "⭐ 10 / 10 — according to the boy who never forgot",
-    runtime : "From the school corridor to forever",
-    desc    : "She was just a little girl from school.\n\nThe one I saw in corridors. The one who gave me chocolates. The one who wrote friendship quotes in handmade letters and Get Well Soon cards. The one everyone admired for her confidence, her talent, and the way she could light up a room without even trying.\n\nBack then, she was simply my friend. At least, that's what I thought.\n\nYears passed. Classrooms became memories. Rehearsals ended. School uniforms disappeared. Life moved forward the way it always does. Yet somehow, through every version of ourselves, every phase of life, and every mile between yesterday and today, she remained.\n\nSome people become memories. She became a constant.\n\n\"One day, the little girl from school is going to become one of the most important people in your life.\"",
-    starring: "Starring: Chandan & Nidhi",
-    themes  : "Themes: School Memories • Growing Up • Friendship • Time • Comfort • Loyalty",
-    review  : "\"Maybe my younger self already knew something my older self was still figuring out.\" 💛",
-    heroCard: false
+    poster:"poster_8.png", video:null, driveId:"1UOWYTO-vHqNi0Glt3QOFENuajk-MDFYg",
+    title:"The Little Girl From School",
+    tagline:"\u201cI never imagined she\u2019d become my greatest comfort.\u201d",
+    year:"From the school corridor to forever", genre:"Friendship \u2022 Nostalgia \u2022 Coming of Age \u2022 Feel-Good Drama",
+    rating:"\u2B50 10 / 10 \u2014 according to the boy who never forgot", runtime:"From the school corridor to forever",
+    desc:"She was just a little girl from school.\n\nThe one I saw in corridors. The one who gave me chocolates. The one who wrote friendship quotes in handmade letters and Get Well Soon cards.\n\nYears passed. Classrooms became memories. Rehearsals ended. School uniforms disappeared. Life moved forward the way it always does. Yet somehow, through every version of ourselves, she remained.\n\nSome people become memories. She became a constant.\n\n\u201cOne day, the little girl from school is going to become one of the most important people in your life.\u201d",
+    starring:"Starring: Chandan & Nidhi",
+    themes:"Themes: School Memories \u2022 Growing Up \u2022 Friendship \u2022 Time \u2022 Comfort \u2022 Loyalty",
+    review:"\u201cMaybe my younger self already knew something my older self was still figuring out.\u201d \uD83D\uDC9B"
   },
-  /* ── 9 ── */
   {
-    poster  : "poster_9.png",
-    video   : "video_9.mp4",
-    driveId : null,
-    title   : "The Brother I Chose",
-    tagline : "\"One day he was a stranger. The next day he was family.\" ❤️",
-    year    : "From the very first lunch",
-    genre   : "Friendship • Family • Feel-Good Comedy",
-    rating  : "⭐⭐⭐⭐⭐",
-    runtime : "Until Nidhi adopts another sibling",
-    desc    : "Nobody really knows when it happened.\n\nOne day, Pranav was just someone Nidhi happened to meet through Khushi. The next day, he was eating lunch made by her mother, getting unsolicited life advice, receiving elder-sister treatment, and becoming part of the family without ever being officially asked.\n\nSome friendships take years to build. Theirs skipped the waiting period.\n\nWhat started as a chance introduction quickly became one of those rare connections that feels familiar from the very beginning. There was no awkward phase, no careful distance, and no gradual process of getting comfortable. Somehow, they simply understood each other.\n\nTo Nidhi, Pranav became the little brother she never planned on having but somehow ended up adopting anyway. Someone she would protect, support, and stand beside no matter what.\n\nAnd for Pranav, Nidhi became one of those people who make life feel lighter simply by being around.\n\nThey may not share the same surname. But somewhere between homemade lunches, endless conversations, ridiculous jokes, and the world's best hugs, they became family anyway.\n\nA heartwarming story about unexpected friendships, chosen family, sibling energy, and the people who enter your life without warning and never really leave.",
-    starring: "Starring: Nidhi & Pranav",
-    themes  : "Themes: Chosen Family • Sibling Bond • Care • Trust • Best Hugs • Home",
-    review  : "\"I met him through a friend. Somehow, I got a brother.\" ❤️",
-    heroCard: false
+    poster:"poster_9.png", video:"video_9.mp4", driveId:null,
+    title:"The Brother I Chose",
+    tagline:"\u201cOne day he was a stranger. The next day he was family.\u201d \u2764\uFE0F",
+    year:"From the very first lunch", genre:"Friendship \u2022 Family \u2022 Feel-Good Comedy",
+    rating:"\u2B50\u2B50\u2B50\u2B50\u2B50", runtime:"Until Nidhi adopts another sibling",
+    desc:"Nobody really knows when it happened.\n\nOne day, Pranav was just someone Nidhi happened to meet through Khushi. The next day, he was eating lunch made by her mother, getting unsolicited life advice, receiving elder-sister treatment, and becoming part of the family without ever being officially asked.\n\nSome friendships take years to build. Theirs skipped the waiting period.\n\nTo Nidhi, Pranav became the little brother she never planned on having but somehow ended up adopting anyway. Someone she would protect, support, and stand beside no matter what.\n\nThey may not share the same surname. But somewhere between homemade lunches, endless conversations, ridiculous jokes, and the world\u2019s best hugs, they became family anyway.",
+    starring:"Starring: Nidhi & Pranav",
+    themes:"Themes: Chosen Family \u2022 Sibling Bond \u2022 Care \u2022 Trust \u2022 Best Hugs \u2022 Home",
+    review:"\u201cI met him through a friend. Somehow, I got a brother.\u201d \u2764\uFE0F"
   },
-  /* ── 10 ── BLANK — fill in your details
-     🔁 poster_10.png / video_10.mp4  */
   {
-    poster  : "poster_10.png",
-    video   : "video_10.mp4",
-    driveId : null,
-    title   : "Coming Soon",
-    tagline : "\"Another story worth telling.\"",
-    year    : "—",
-    genre   : "—",
-    rating  : "⭐ — / 10",
-    runtime : "—",
-    desc    : "This story is still being written.\n\nCome back soon.",
-    starring: "Starring: —",
-    themes  : "Themes: —",
-    review  : "\"Every great collection has room for one more.\"",
-    heroCard: false
+    poster:"poster_10.png", video:"video_10.mp4", driveId:null,
+    title:"Coming Soon",
+    tagline:"\u201cAnother story worth telling.\u201d",
+    year:"\u2014", genre:"\u2014",
+    rating:"\u2B50 \u2014 / 10", runtime:"\u2014",
+    desc:"This story is still being written.\n\nCome back soon.",
+    starring:"Starring: \u2014",
+    themes:"Themes: \u2014",
+    review:"\u201cEvery great collection has room for one more.\u201d"
   }
 ];
 
-/* ── Build grid ── */
+/* ══════════════ HERO CAROUSEL ══════════════ */
+let heroIndex = 0;
+let heroTimer = null;
+
+function buildHero() {
+  const hero = document.getElementById('hero');
+  const dotsEl = document.getElementById('hero-dots');
+
+  // create one slide per movie
+  movies.forEach((m, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'hero-slide' + (i === 0 ? ' active' : '');
+    slide.id = 'slide-' + i;
+
+    const img = document.createElement('img');
+    img.src = m.poster;
+    img.alt = m.title;
+    img.onerror = function() {
+      this.style.display = 'none';
+      const fb = document.createElement('div');
+      fb.className = 'slide-fallback';
+      fb.textContent = '\uD83C\uDFAC';
+      slide.insertBefore(fb, slide.firstChild);
+    };
+    slide.appendChild(img);
+    // insert before .hero-fade
+    hero.insertBefore(slide, hero.querySelector('.hero-fade'));
+
+    // dot
+    const dot = document.createElement('button');
+    dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Slide ' + (i+1));
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsEl.appendChild(dot);
+  });
+
+  updateHeroText(0, false);
+  startCarousel();
+}
+
+function updateHeroText(idx, animate) {
+  const m = movies[idx];
+  const body = document.getElementById('hero-body');
+  document.getElementById('hero-tagline').textContent = m.tagline;
+  document.getElementById('hero-title').textContent   = m.title;
+  // short version of desc for hero (first paragraph only)
+  const shortDesc = m.desc.split('\n\n')[0];
+  document.getElementById('hero-desc').textContent = shortDesc;
+  document.getElementById('hero-btn').dataset.idx  = idx;
+
+  if (animate) {
+    body.classList.remove('anim');
+    void body.offsetWidth; // reflow
+    body.classList.add('anim');
+  }
+}
+
+function goToSlide(idx) {
+  // deactivate current
+  document.getElementById('slide-' + heroIndex).classList.remove('active');
+  document.querySelectorAll('.hero-dot')[heroIndex].classList.remove('active');
+  // activate new
+  heroIndex = idx;
+  document.getElementById('slide-' + heroIndex).classList.add('active');
+  document.querySelectorAll('.hero-dot')[heroIndex].classList.add('active');
+  updateHeroText(heroIndex, true);
+}
+
+function startCarousel() {
+  heroTimer = setInterval(() => {
+    goToSlide((heroIndex + 1) % movies.length);
+  }, 5000);
+}
+
+function heroPlay() {
+  const idx = parseInt(document.getElementById('hero-btn').dataset.idx) || 0;
+  openModal(idx);
+}
+
+/* ══════════════ GRID ══════════════ */
 const grid = document.getElementById('movies-grid');
 movies.forEach((m, i) => {
   const card = document.createElement('div');
   card.className = 'movie-card';
   card.onclick = () => openModal(i);
-  card.innerHTML = `
-    <img class="poster-img" src="${m.poster}" alt="${m.title}"
-         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-    <div class="poster-fallback" style="display:none;">
-      <div class="pf-icon">🎬</div>
-      <div class="pf-name">${m.poster}</div>
-    </div>
-    <div class="card-hover">
-      <div class="ch-title">${m.title}</div>
-      <div class="ch-meta">${m.genre.split('•')[0].trim()}</div>
-      <div class="ch-play">▶ Play</div>
-    </div>`;
+  card.innerHTML =
+    '<img class="poster-img" src="' + m.poster + '" alt="' + m.title + '" ' +
+    'onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
+    '<div class="poster-fallback" style="display:none;"><div class="pf-icon">\uD83C\uDFAC</div>' +
+    '<div class="pf-name">' + m.poster + '</div></div>' +
+    '<div class="card-hover"><div class="ch-title">' + m.title + '</div>' +
+    '<div class="ch-meta">' + m.genre.split('\u2022')[0].trim() + '</div>' +
+    '<div class="ch-play">&#9654; Play</div></div>';
   grid.appendChild(card);
 });
 
-/* ── Navigation ── */
+/* ══════════════ NAVIGATION ══════════════ */
 function enterBrowse() {
   document.getElementById('profile-screen').style.display = 'none';
-  document.getElementById('browse-screen').style.display = 'block';
-  document.getElementById('back-btn').style.display = 'block';
-  window.scrollTo(0,0);
+  document.getElementById('browse-screen').style.display  = 'block';
+  document.getElementById('back-btn').style.display       = 'block';
+  window.scrollTo(0, 0);
+  buildHero();
 }
 function goBack() {
   closeModal();
-  document.getElementById('browse-screen').style.display = 'none';
+  clearInterval(heroTimer);
+  document.getElementById('browse-screen').style.display  = 'none';
   document.getElementById('profile-screen').style.display = 'flex';
-  document.getElementById('back-btn').style.display = 'none';
+  document.getElementById('back-btn').style.display       = 'none';
+  // clear slides for re-build next time
+  document.querySelectorAll('.hero-slide').forEach(s => s.remove());
+  document.getElementById('hero-dots').innerHTML = '';
+  heroIndex = 0;
 }
 
-/* ── Modal ── */
+/* ══════════════ MODAL ══════════════ */
 function openModal(idx) {
   const m = movies[idx];
 
-  /* poster — reset onerror each time so it fires correctly on every open */
+  // poster
   const posterEl = document.getElementById('modal-poster');
   const posterFb = document.getElementById('modal-poster-fb');
   posterEl.onerror = null;
@@ -892,31 +477,28 @@ function openModal(idx) {
   posterEl.src = m.poster;
   posterEl.alt = m.title;
 
-  /* reset video — store source, don't load until Play */
+  // video reset
   const vid = document.getElementById('modal-video');
   vid.pause();
   vid.removeAttribute('src');
   vid.load();
   vid.style.display = 'none';
-  vid._pendingSrc = m.video   || null;   /* local mp4 */
-  vid._driveId   = m.driveId || null;   /* google drive file id */
-  /* remove any leftover drive iframe */
-  const old = document.getElementById('drive-iframe');
-  if (old) old.remove();
+  vid._pendingSrc = m.video   || null;
+  vid._driveId   = m.driveId || null;
+  const oldIframe = document.getElementById('drive-iframe');
+  if (oldIframe) oldIframe.remove();
 
-  /* show poster controls */
-  document.getElementById('modal-top-fade').style.display = 'block';
-  document.getElementById('modal-play-btn').style.display = 'inline-flex';
+  document.getElementById('modal-top-fade').style.display  = 'block';
+  document.getElementById('modal-play-btn').style.display  = 'inline-flex';
 
-  /* fill text */
+  // text
   document.getElementById('m-title').textContent   = m.title;
   document.getElementById('m-tagline').textContent = m.tagline;
   document.getElementById('m-year').textContent    = m.year;
   document.getElementById('m-genre').textContent   = m.genre;
   document.getElementById('m-rating').textContent  = m.rating;
-  document.getElementById('m-runtime').textContent = '🕐 ' + m.runtime;
+  document.getElementById('m-runtime').textContent = '\uD83D\uDD50 ' + m.runtime;
 
-  /* multiline desc */
   const descEl = document.getElementById('m-desc');
   descEl.innerHTML = '';
   m.desc.split('\n\n').forEach(para => {
@@ -926,31 +508,32 @@ function openModal(idx) {
     descEl.appendChild(p);
   });
 
-  document.getElementById('m-starring').innerHTML = `<span>${m.starring}</span>`;
-  document.getElementById('m-themes').innerHTML   = `<span>${m.themes}</span>`;
+  document.getElementById('m-starring').innerHTML = '<span>' + m.starring + '</span>';
+  document.getElementById('m-themes').innerHTML   = '<span>' + m.themes   + '</span>';
   document.getElementById('m-review').textContent  = m.review;
 
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow = 'hidden';
+  // pause carousel while modal is open
+  clearInterval(heroTimer);
 }
 
 function playVideo() {
-  const vid       = document.getElementById('modal-video');
-  const posterEl  = document.getElementById('modal-poster');
-  const posterFb  = document.getElementById('modal-poster-fb');
-  const modalTop  = document.getElementById('modal-top');
+  const vid      = document.getElementById('modal-video');
+  const posterEl = document.getElementById('modal-poster');
+  const posterFb = document.getElementById('modal-poster-fb');
+  const modalTop = document.getElementById('modal-top');
 
-  /* hide poster controls */
-  posterEl.style.display  = 'none';
-  posterFb.style.display  = 'none';
+  posterEl.style.display = 'none';
+  posterFb.style.display = 'none';
   document.getElementById('modal-top-fade').style.display = 'none';
   document.getElementById('modal-play-btn').style.display = 'none';
 
-  /* ── GOOGLE DRIVE video ── */
+  // Google Drive iframe
   if (vid._driveId) {
     const iframe = document.createElement('iframe');
     iframe.id = 'drive-iframe';
-    iframe.src = `https://drive.google.com/file/d/${vid._driveId}/preview`;
+    iframe.src = 'https://drive.google.com/file/d/' + vid._driveId + '/preview';
     iframe.allow = 'autoplay';
     iframe.allowFullscreen = true;
     iframe.style.cssText = 'width:100%;aspect-ratio:16/9;border:none;display:block;background:#000;';
@@ -958,7 +541,7 @@ function playVideo() {
     return;
   }
 
-  /* ── LOCAL mp4 video ── */
+  // local mp4
   if (vid._pendingSrc) {
     vid.src = vid._pendingSrc;
     vid._pendingSrc = null;
@@ -967,8 +550,8 @@ function playVideo() {
   vid.play().catch(() => {
     vid.style.display = 'none';
     const fb = document.createElement('div');
-    fb.style.cssText = 'padding:36px;text-align:center;color:#888;font-size:0.85rem;line-height:1.6;';
-    fb.textContent = '⚠️ Video not found. Make sure the .mp4 file is in the same folder as the HTML.';
+    fb.style.cssText = 'padding:36px;text-align:center;color:#888;font-size:.85rem;line-height:1.6;';
+    fb.textContent = '\u26A0\uFE0F Video not found. Make sure the .mp4 file is in the same folder as the HTML.';
     modalTop.prepend(fb);
   });
 }
@@ -979,18 +562,17 @@ function closeModal() {
   vid.removeAttribute('src');
   vid.load();
   vid.style.display = 'none';
-  /* remove drive iframe if present */
   const iframe = document.getElementById('drive-iframe');
   if (iframe) iframe.remove();
-  const posterEl = document.getElementById('modal-poster');
-  posterEl.style.display = 'block';
+  document.getElementById('modal-poster').style.display    = 'block';
   document.getElementById('modal-poster-fb').style.display = 'none';
-  document.getElementById('modal-play-btn').style.display = 'inline-flex';
-  document.getElementById('modal-top-fade').style.display = 'block';
-  /* remove any error message divs */
+  document.getElementById('modal-play-btn').style.display  = 'inline-flex';
+  document.getElementById('modal-top-fade').style.display  = 'block';
   document.querySelectorAll('#modal-top > div:not(.modal-top-fade):not(.modal-poster-fallback)').forEach(el => el.remove());
   document.getElementById('modal').classList.remove('open');
   document.body.style.overflow = '';
+  // resume carousel
+  startCarousel();
 }
 
 function overlayClick(e) {
